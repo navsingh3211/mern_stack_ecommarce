@@ -10,6 +10,7 @@ const Header = lazy(() => import('./components/header'));
 
 {/*Logged in user routes*/}
 const Shipping = lazy(() => import("./pages/shipping"));
+const Login = lazy(()=> import("./pages/login"));
 
 {/*Admin routes importing*/}
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -42,7 +43,8 @@ const App = ()=>{
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
-          
+          <Route path="/login" element={<Login />} />
+
           <Route>
             <Route path="/shipping" element={<Shipping />} />
           </Route>
