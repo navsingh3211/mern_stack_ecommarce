@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProductCard from "../components/product-card";
 
 const Search =() => {
   const [search,setSearch] = useState("");
@@ -7,8 +8,13 @@ const Search =() => {
   const [category,setCategory] = useState("");
   const [page,setPage] = useState(1);
 
+  const addToCartHandler = ()=>{};
+
+  const isPrevPage = page>1;
+  const isNextPage = page<4;
+
   return (
-    <div className="product-search-page">
+    <div className="product-search-page"> 
       <aside>
         <h2>Filters</h2>
         <div>
@@ -34,13 +40,47 @@ const Search =() => {
         <div>
           <h4>Category</h4>
           <select value={category} onChange={(e)=>setCategory(e.target.value)}>
-            <option value="">None</option>
-            <option value="">Price (Low to High)</option>
-            <option value="">Price (High to High)</option>
+            <option value="">All</option>
+            <option value="">Sample1</option>
+            <option value="">Sample2</option>
           </select>
         </div>
       </aside>
-      <main></main>
+      <main>
+        <h1>Products</h1>
+        <input 
+          type="text" 
+          placeholder="Search by name..." 
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+        />
+
+        <div className="search-product-list">
+            <ProductCard 
+              productId='dfvdvd'
+              photo='https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81YiRc1hHmL._SL1500_.jpg'
+              name='Bhagavad Gita'
+              price={2345} 
+              stock={121} 
+              handler = {addToCartHandler}
+            />
+        </div>
+
+        <article>
+          <button 
+            disabled={!isPrevPage}
+            onClick={()=>setPage((prev)=>prev-1)}
+          >Prev
+          </button>
+          <span>{page} of {4}</span>
+          <button 
+            disabled={!isNextPage}
+            onClick={()=>setPage((prev)=>prev+1)}
+          >Next
+          </button>
+        </article>
+
+      </main>
     </div>
   )
 }
