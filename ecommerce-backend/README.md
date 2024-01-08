@@ -9,4 +9,4 @@
 8.) `node ./dist/app.js` run the project or start the server
 9.)"watch":"tsc -w"  watch command when ever any change happen it will automatically create the build ,we don't have to create the build again n again
 10.) command to run app.js file inside the dist continouly  `nodemon dist/app.js`
-11.)
+11.)DevDependencies=>only required during development, testing, or build processes.
