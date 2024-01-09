@@ -1,3 +1,5 @@
+import { Request,Response,NextFunction } from 'express';
+
 export interface NewUserRequest {
   _id:String;
   name:String;
@@ -6,5 +8,8 @@ export interface NewUserRequest {
   role:String;
   gender:String;
   dob:Date;
- 
 };
+
+export type controllerType = (
+    req: Request, res: Response, next: NextFunction
+) => Promise<void | Response<any, Record<string, any>>>;
