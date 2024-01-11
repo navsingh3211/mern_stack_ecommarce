@@ -20,7 +20,8 @@ const schema = new mongoose.Schema(
     },
     category:{
       type:String,
-      required:[true,"Plase enter category"]
+      required:[true,"Plase enter category"],
+      trim:true
     },
     status:{
       type:Boolean,

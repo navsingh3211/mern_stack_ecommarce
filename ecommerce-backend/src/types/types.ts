@@ -10,6 +10,13 @@ export interface NewUserRequest {
   dob:Date;
 };
 
+export interface NewProductRequest {
+  name:string;
+  category:string;
+  price:number;
+  stock:number;
+};
+
 export type controllerType = (
     req: Request, res: Response, next: NextFunction
 ) => Promise<void | Response<any, Record<string, any>>>;

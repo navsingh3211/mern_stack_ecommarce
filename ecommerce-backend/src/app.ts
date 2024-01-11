@@ -17,6 +17,12 @@ connectDB();
 
 app.use('/api/v1',routes());
 
+/*
+-->by going to /uploads path, we can access uploads folder
+-->express.static("uploads") is the middleware function. It serves static files from the "uploads" directory.
+*/
+app.use('/uploads',express.static('uploads'));
+
 app.use(errorMiddleware);
 
 
