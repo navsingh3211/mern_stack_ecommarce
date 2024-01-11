@@ -1,12 +1,12 @@
 import { Request,Response,NextFunction } from 'express';
 
 export interface NewUserRequest {
-  _id:String;
-  name:String;
-  email:String;
-  photo:String;
-  role:String;
-  gender:String;
+  _id:string;
+  name:string;
+  email:string;
+  photo:string;
+  role:string;
+  gender:string;
   dob:Date;
 };
 

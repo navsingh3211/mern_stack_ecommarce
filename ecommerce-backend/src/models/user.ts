@@ -47,6 +47,11 @@ const schema = new mongoose.Schema(
     dob:{
       type:Date,
       required:[true,"Please enter the D.O.B"]
+    },
+    status:{
+      type:Boolean,
+      required:false,
+      default:true
     }
   },
   {

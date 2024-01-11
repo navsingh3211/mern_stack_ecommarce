@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import express from 'express';
 const router = express.Router();
-import user from './user.js';
+import userRoute from './user.js';
+import productRoute from './products.js';
 
 
 /**
@@ -16,7 +17,9 @@ const routes = () => {
     );
   });
   
-  router.use('/user', user);
+  router.use('/user', userRoute);
+  router.use('/product', productRoute);
+
   return router;
 };
 
