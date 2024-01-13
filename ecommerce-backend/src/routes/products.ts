@@ -1,4 +1,4 @@
-import express from "express";//search
+import express from "express";//3:07hour
 
 import {
     newProduct,
@@ -7,7 +7,8 @@ import {
     getAdminProducts,
     getProductsById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    searchAllProducts
 } from '../controllers/product.js'
 import { adminOnly } from "../middlewares/auth.js";
 import { singleUpload } from "../middlewares/multer.js";
@@ -15,6 +16,9 @@ import { singleUpload } from "../middlewares/multer.js";
 const router = express.Router();
 
 router.post('/new',adminOnly,singleUpload,newProduct);
+
+router.get('/all',searchAllProducts);//get all product with filter and search
+
 router.get('/latest',getLatestProducts);
 router.get('/categories',getAllCategories);
 
