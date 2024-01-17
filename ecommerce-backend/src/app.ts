@@ -1,5 +1,6 @@
 import express, { Request,Response,NextFunction } from 'express';
 import bodyParser from 'body-parser';
+import NodeCache from 'node-cache';
 import routes from './routes/index.js';
 import {connectDB} from './utils/features.js';
 import {errorMiddleware} from './middlewares/error.js';
@@ -14,6 +15,8 @@ const app = express();
 app.use(express.json());
 
 connectDB();
+
+export const myCache = new NodeCache( );
 
 app.use('/api/v1',routes());
 
