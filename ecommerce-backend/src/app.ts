@@ -1,11 +1,18 @@
 import express, { Request,Response,NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import NodeCache from 'node-cache';
+import dotenv from 'dotenv';
+import morgan from 'morgan';
 import routes from './routes/index.js';
 import {connectDB} from './utils/features.js';
 import {errorMiddleware} from './middlewares/error.js';
 
-const port = 4000;
+dotenv.config({
+  path:"./.env"
+});
+// console.log(process.env.PORT);
+const mongoUrl = process.env.MONGO_URL || "";
+const port = process.env.PORT || 4000;
 const app = express();
 
 /* 
@@ -14,9 +21,11 @@ const app = express();
 */
 app.use(express.json());
 
-connectDB();
+connectDB(mongoUrl);
 
-export const myCache = new NodeCache( );
+export const myCache = new NodeCache();
+
+app.use(morgan("dev"));//to show log and api calls
 
 app.use('/api/v1',routes());
 

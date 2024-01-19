@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import express from 'express';
 const router = express.Router();
+
 import userRoute from './user.js';
 import productRoute from './products.js';
-
+import orderRoute from './order.js';
 
 /**
  * Function contains Application routes
@@ -19,6 +20,7 @@ const routes = () => {
   
   router.use('/user', userRoute);
   router.use('/product', productRoute);
+  router.use('/order', orderRoute);
 
   return router;
 };
