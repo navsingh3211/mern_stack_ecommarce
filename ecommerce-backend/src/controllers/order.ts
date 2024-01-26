@@ -23,7 +23,7 @@ export const newOrder = TryCatch(
         !shippingInfo || !orderItems || !user || !subtotal || !subtotal || !tax || !total
       ) return next(new ErrorHandler("Please enter all fields.",400));
 
-    await Order.create({
+    const order = await Order.create({
       shippingInfo,
       orderItems,
       user,
@@ -36,8 +36,14 @@ export const newOrder = TryCatch(
 
     await reduceStock(orderItems);
 
-    await invalidateCache({product:true,order:true,admin:true,userId:user});//removing order from cache
-    return res.status(201).json({
+    await invalidateCache({
+      product:true,
+      order:true,
+      admin:true,
+      userId:user,
+      productId:order.orderItems.map((item)=>String(item.productId))
+    });//removing order from cache
+    return res.status(200).json({
       success:true,
       message:"Order Placed Successfully."
     });
@@ -57,7 +63,7 @@ export const myOrders = TryCatch(
 
       myCache.set(cacheKey,JSON.stringify(orders));
     }
-    return res.status(201).json({
+    return res.status(200).json({
       success:true,
       orders
     });
@@ -76,7 +82,7 @@ export const allOrders = TryCatch(
 
       myCache.set(cacheKey,JSON.stringify(orders));
     }
-    return res.status(201).json({
+    return res.status(200).json({
       success:true,
       orders
     });
@@ -100,7 +106,7 @@ export const getOrderDetails = TryCatch(
 
       myCache.set(cacheKey,JSON.stringify(order));
     }
-    return res.status(201).json({
+    return res.status(200).json({
       success:true,
       order
     });
@@ -135,8 +141,8 @@ export const processOrder = TryCatch(
       userId:order.user,
       orderId:String(order._id)
     });//removing order from cache
-    
-    return res.status(201).json({
+
+    return res.status(200).json({
       success:true,
       message:"Order Processed Successfully."
     });
@@ -161,7 +167,7 @@ export const deleteOrder = TryCatch(
       orderId:String(order._id)
     });//removing order from cache
 
-    return res.status(201).json({
+    return res.status(200).json({
       success:true,
       message:"Order Deleted Successfully."
     });
