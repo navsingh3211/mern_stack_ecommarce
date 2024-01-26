@@ -5,6 +5,7 @@ const router = express.Router();
 import userRoute from './user.js';
 import productRoute from './products.js';
 import orderRoute from './order.js';
+import paymentRoute from './payment.js';
 
 /**
  * Function contains Application routes
@@ -21,6 +22,8 @@ const routes = () => {
   router.use('/user', userRoute);
   router.use('/product', productRoute);
   router.use('/order', orderRoute);
+  router.use('/payment', paymentRoute);
+
 
   return router;
 };
