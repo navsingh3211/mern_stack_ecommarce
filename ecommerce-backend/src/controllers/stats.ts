@@ -76,6 +76,10 @@ export const getDashboardStats = TryCatch(async(req,res,next)=>{
       }
     });
 
+    const latestTransactionsPromise = Order.find({})
+      .select(["orderItems", "discount", "total", "status"])
+      .limit(4);
+
     let [
       thisMonthProducts,
       lastMonthProducts,
@@ -86,7 +90,10 @@ export const getDashboardStats = TryCatch(async(req,res,next)=>{
       productsCount,
       usersCount,
       allOrders,
-      lastSixMonthOrders
+      lastSixMonthOrders,
+      categories,
+      femaleUsersCount,
+      latestTransaction
     ] = await Promise.all([
       thisMonthProductsPromise,
       lastMonthProductsPromise,
@@ -97,7 +104,10 @@ export const getDashboardStats = TryCatch(async(req,res,next)=>{
       Product.countDocuments({status:true}),
       User.countDocuments(),
       Order.find({}).select("total"),
-      lastSixMonthOrdersPromise
+      lastSixMonthOrdersPromise,
+      Product.distinct("category"),
+      User.countDocuments({gender:"female"}),
+      latestTransactionsPromise
     ]);
 
     const thisMonthRevenue = thisMonthOrders.reduce((total,current)=> total + (current.total || 0),0);
@@ -132,14 +142,43 @@ export const getDashboardStats = TryCatch(async(req,res,next)=>{
       }
     })
 
+    const categoriesCountPromise = categories.map((category)=>Product.countDocuments({category}));
+    const categoriesCount = await Promise.all(categoriesCountPromise);
+    const categoryCount:Record<string,number>[] = [];
+
+    categories.forEach((category,i)=>{
+      // console.log(category)
+      categoryCount.push({
+        [category]:Math.round((categoriesCount[i]/productsCount)*100)
+      });
+    })
+
+    const userRatio = {
+      male:usersCount-femaleUsersCount,
+      female:femaleUsersCount
+    }
+
+    const modifiedLatestTransaction = latestTransaction.map((i) => ({
+      _id: i._id,
+      discount: i.discount,
+      amount: i.total,
+      quantity: i.orderItems.length,
+      status: i.status,
+    }));
+
     stats = {
+      categoryCount,
       changePercent,
       count,
       chart:{
         order:orderMonthCounts,
         revenue:orderMonthlyRevenue
-      }
+      },
+      userRatio,
+      latestTransaction: modifiedLatestTransaction
     }
+
+    myCache.set("admin-stats",JSON.stringify(stats));
   }
 
   return res.status(200).json({
