@@ -11,3 +11,14 @@
 10.) command to run app.js file inside the dist continouly  `nodemon dist/app.js`
 11.)DevDependencies=>only required during development, testing, or build processes.
 12.) app.use(middleware)  always contains middleware as a parameter
+
+
+1.) creating new project pushing in git hub command
+a.) git init
+b.) git add .
+c.) git commit -m ""
+d.) git remote-->check remote file added or not
+e.) git remote add origin https://github.com/navsingh3211/mern_stack_ecommarce_backend.git
+f.) git remote--> orgin named remote is added
+g.) git remot -v --> to see link
+h.) git push origin master
