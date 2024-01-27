@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import routes from './routes/index.js';
 import {connectDB} from './utils/features.js';
 import {errorMiddleware} from './middlewares/error.js';
+import Stripe from 'stripe';
 
 dotenv.config({
   path:"./.env"
@@ -13,6 +14,7 @@ dotenv.config({
 // console.log(process.env.PORT);
 const mongoUrl = process.env.MONGO_URL || "";
 const port = process.env.PORT || 4000;
+const stripeKey = process.env.STRIPE_KEY || "";
 const app = express();
 
 /* 
@@ -23,6 +25,7 @@ app.use(express.json());
 
 connectDB(mongoUrl);
 
+export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 
 app.use(morgan("dev"));//to show log and api calls
