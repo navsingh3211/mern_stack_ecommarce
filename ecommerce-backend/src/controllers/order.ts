@@ -36,7 +36,7 @@ export const newOrder = TryCatch(
 
     await reduceStock(orderItems);
 
-    await invalidateCache({
+    invalidateCache({
       product:true,
       order:true,
       admin:true,
@@ -134,7 +134,7 @@ export const processOrder = TryCatch(
     }
     await order.save();
 
-    await invalidateCache({
+    invalidateCache({
       product:false,
       order:true,
       admin:true,
@@ -159,7 +159,7 @@ export const deleteOrder = TryCatch(
 
     await order.deleteOne();
 
-    await invalidateCache({
+    invalidateCache({
       product:false,
       order:true,
       admin:true,

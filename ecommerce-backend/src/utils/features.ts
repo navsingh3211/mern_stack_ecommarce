@@ -21,10 +21,7 @@ export const connectDB = async (mongoUrl:string) => {
   }
 }
 
-
-
-
-export const invalidateCache = async ({product,order,admin,userId,orderId,productId}:invalidateCacheProps)=>{
+export const invalidateCache = ({product,order,admin,userId,orderId,productId}:invalidateCacheProps)=>{
   if(product){
     const productKeys:string[] = [
       "latest-products",
@@ -50,7 +47,7 @@ export const invalidateCache = async ({product,order,admin,userId,orderId,produc
   }
 
   if(admin){
-    
+    myCache.del(["admin-stats","admin-pie-charts","admin-bar-charts","admin-line-charts"]);
   }
 }
 
